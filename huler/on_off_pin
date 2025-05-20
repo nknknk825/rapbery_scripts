@@ -1,0 +1,22 @@
+#!/bin/bash
+
+init_pin() {
+
+    sudo chmod 666 "/sys/class/gpio/gpio${1}/direction" 2>/dev/null
+
+	echo "$1" > "/sys/class/gpio/export"
+
+    sudo chmod 666 "/sys/class/gpio/gpio${1}/direction" 2>/dev/null
+    sudo chmod 666 "/sys/class/gpio/gpio${1}/value" 2>/dev/null
+
+	echo "out" > "/sys/class/gpio/gpio${1}/direction"
+}
+
+pin_status() {
+	if [ "$(cat /sys/class/gpio/gpio${1}/direction 2>/dev/null)" != "out" ];then init_pin ${1};fi
+	echo ${2} > "/sys/class/gpio/gpio${1}/value"
+}
+
+
+
+

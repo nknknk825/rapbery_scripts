@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. /home/admin/myproject/huler/on_off_pin
+
+while true;do
+	ip=$(hostname -I | awk '{print $1}')  # Берем только первый IP
+	ip=$(echo "$ip" | xargs)              # Удаляем лишние пробелы
+	if [ "$ip" == "192.168.0.99" ];then
+		pin_status 18 1
+		sleep 2
+		pin_status 18 0
+		sleep 1
+		./check_temp
+		break
+	fi
+done
+
