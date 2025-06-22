@@ -1,12 +1,10 @@
 #!/bin/bash
 
-. /home/admin/myproject/huler/on_off_pin
-
-(
+gpio -g mode 18 out
+lim_temp=44
 while true;do
 	temp="$(cat /sys/class/thermal/thermal_zone0/temp | awk '{print int($1/1000 + 0.5)}')"
-	if [ "$temp" -gt "40" ];then pin_status 18 1
-	else pin_status 18 0;fi
-	sleep 1m
+	if [[ "$temp" -gt "$lim_temp" && "$(date "+%H")" -gt "07" ]];then gpio -g write 18 1;lim_temp=38;sleep 1s
+	else gpio -g write 18 0;lim_temp=44;sleep 1m;fi
 done
-) &
+

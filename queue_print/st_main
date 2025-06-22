@@ -1,0 +1,4 @@
+#!/bin/bash
+gcc -Wall -Wextra -o main_check_que main_check_que.c -lpigpio -lrt
+
+
